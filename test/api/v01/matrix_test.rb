@@ -143,14 +143,14 @@ class Api::V01::MatrixTest < Minitest::Test
       # can be the rest of destinations number or 100
       assert [100, @dest_number % 100].include?(params.keys.select { |key| key =~ /^destination/ }.count)
 
-      max_start = RouterWrapper::HERE_TRUCK.send(:max_srcs, @distance_km)
+      max_start = RouterWrapper::HERE_TRUCK.send(:max_srcs, @distance_km, {})
       # can be the rest of starts number or max_start
       assert [max_start, @start_number % 5].include?(params.keys.select { |key| key =~ /^start/ }.count)
 
       {"response"=>{"matrixEntry"=>[{"startIndex"=>0, "destinationIndex"=>0, "summary"=>{"travelTime"=>0, "costFactor"=>1}}, {"startIndex"=>0, "destinationIndex"=>1, "summary"=>{"travelTime"=>1356, "costFactor"=>1750}}]}}
     }) do
       centroid = { lat: 43.851084, lng: -1.385374 }
-      [200, 1000, 2000].each do |km|
+      [200, 1000, 2070].each do |km|
         @distance_km = km
 
         @start_number = 32
